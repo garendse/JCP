@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256.0px"
+   height="256.0px"
+   viewBox="0 0 256.0 256.0"
+   version="1.1"
+   id="SVGRoot"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs9" />
+  <g
+     id="layer1">
+    <ellipse
+       style="fill:#64748b;fill-rule:evenodd;stroke-width:1.02421;fill-opacity:1"
+       id="path67"
+       cx="128.02623"
+       cy="128.026"
+       rx="128.02623"
+       ry="128.026" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:138.505px;line-height:1.25;font-family:'Bodoni MT';-inkscape-font-specification:'Bodoni MT, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#1e293b;fill-opacity:1;stroke:none;stroke-width:3.46264"
+       x="5.1240058"
+       y="173.41422"
+       id="text3316"><tspan
+         id="tspan14768"
+         x="5.1240058"
+         y="173.41422"
+         style="stroke-width:3.46264">JCP</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,1068 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JobCostProModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="j_customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mobile_no" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="home_no" Type="varchar" MaxLength="12" />
+          <Property Name="work_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="alt_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="10" />
+          <Property Name="reg_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="vat_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="address_line_1" Type="nvarchar" MaxLength="50" />
+          <Property Name="address_line_2" Type="nvarchar" MaxLength="50" />
+          <Property Name="address_line_3" Type="nvarchar" MaxLength="50" />
+          <Property Name="postal" Type="nvarchar" MaxLength="50" />
+          <Property Name="site_access_id" Type="char" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="j_errors">
+          <Key>
+            <PropertyRef Name="error_id" />
+          </Key>
+          <Property Name="error_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="data" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_job_codes">
+          <Key>
+            <PropertyRef Name="code" />
+            <PropertyRef Name="site_access_id" />
+          </Key>
+          <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="site_access_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="location" Type="nvarchar" MaxLength="50" />
+          <Property Name="cost" Type="int" Nullable="false" />
+          <Property Name="markup" Type="int" Nullable="false" />
+          <Property Name="standard_hours" Type="int" Nullable="false" />
+          <Property Name="standard_volume" Type="int" Nullable="false" />
+          <Property Name="labour_rate" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_quote_item_supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="supplier_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="quote_item_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="quoted_price" Type="int" Nullable="false" />
+          <Property Name="part_number" Type="nvarchar" MaxLength="100" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="quoted_by" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="quoted_datetime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="accepted_datetime" Type="datetime2" Precision="7" />
+          <Property Name="accepted_by_user_id" Type="char" MaxLength="36" />
+          <Property Name="remarks" Type="text" />
+        </EntityType>
+        <EntityType Name="j_quote_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="quote_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="sort_order" Type="int" Nullable="false" />
+          <Property Name="job_code" Type="nvarchar" MaxLength="10" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="location" Type="nvarchar" MaxLength="50" />
+          <Property Name="labour_hours" Type="int" Nullable="false" />
+          <Property Name="labour_rate" Type="int" Nullable="false" />
+          <Property Name="part_rate" Type="int" Nullable="false" />
+          <Property Name="part_markup" Type="int" Nullable="false" />
+          <Property Name="part_quantity" Type="int" Nullable="false" />
+          <Property Name="auth" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_quote_status">
+          <Key>
+            <PropertyRef Name="status" />
+          </Key>
+          <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sort_order" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_quotes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="ro_number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="branch_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="customer_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="vehicle_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="create_user_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="create_datetime" Type="datetime" Nullable="false" />
+          <Property Name="update_user_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="update_datetime" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="checkin_odometer" Type="int" Nullable="false" />
+          <Property Name="tech_id" Type="char" MaxLength="36" />
+          <Property Name="site_access" Type="char" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="j_sites">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_supplier_branches">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="supplier_id" Type="char" MaxLength="36" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address_line_1" Type="nvarchar" MaxLength="50" />
+          <Property Name="address_line_2" Type="nvarchar" MaxLength="50" />
+          <Property Name="address_line_3" Type="nvarchar" MaxLength="50" />
+          <Property Name="postal" Type="nvarchar" MaxLength="10" />
+          <Property Name="lat" Type="decimal" Precision="16" Scale="8" />
+          <Property Name="lgn" Type="decimal" Precision="16" Scale="8" />
+          <Property Name="contact_person" Type="nvarchar" MaxLength="50" />
+          <Property Name="contact_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="320" />
+        </EntityType>
+        <EntityType Name="j_suppliers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="reg_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="vat_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="tax_clearance" Type="nvarchar" MaxLength="50" />
+          <Property Name="credit_limit" Type="int" />
+          <Property Name="credit_balance" Type="int" />
+          <Property Name="tel_num" Type="nvarchar" MaxLength="12" />
+          <Property Name="address_line_1" Type="nvarchar" MaxLength="50" />
+          <Property Name="address_line_2" Type="nvarchar" MaxLength="50" />
+          <Property Name="address_line_3" Type="nvarchar" MaxLength="50" />
+          <Property Name="postal" Type="nvarchar" MaxLength="10" />
+          <Property Name="contact_person" Type="nvarchar" MaxLength="50" />
+          <Property Name="contact_no" Type="nvarchar" MaxLength="12" />
+          <Property Name="email" Type="nvarchar" MaxLength="320" />
+          <Property Name="after_hours_no" Type="nvarchar" MaxLength="12" />
+          <Property Name="standby_person" Type="nvarchar" MaxLength="50" />
+          <Property Name="standby_no" Type="nvarchar" MaxLength="12" />
+          <Property Name="standby_email" Type="nvarchar" MaxLength="320" />
+        </EntityType>
+        <EntityType Name="j_techs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="site_access_id" Type="char" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="j_user_site_access">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="site_id" />
+          </Key>
+          <Property Name="user_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="site_id" Type="char" MaxLength="36" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tel_no" Type="varchar" MaxLength="50" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="password_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_vehicle_models">
+          <Key>
+            <PropertyRef Name="brand" />
+            <PropertyRef Name="model" />
+          </Key>
+          <Property Name="brand" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_vehicles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="customer_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="vin_number" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="engine_number" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="registration" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="brand" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="site_access_id" Type="char" MaxLength="36" />
+        </EntityType>
+        <Association Name="FK_create_user">
+          <End Role="j_users" Type="Self.j_users" Multiplicity="1" />
+          <End Role="j_quotes" Type="Self.j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="create_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer">
+          <End Role="j_customers" Type="Self.j_customers" Multiplicity="1" />
+          <End Role="j_quotes" Type="Self.j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_items">
+          <End Role="j_quotes" Type="Self.j_quotes" Multiplicity="1" />
+          <End Role="j_quote_items" Type="Self.j_quote_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_quotes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quote_items">
+              <PropertyRef Name="quote_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_j_quote_item_supplier_j_quote_items">
+          <End Role="j_quote_items" Type="Self.j_quote_items" Multiplicity="1" />
+          <End Role="j_quote_item_supplier" Type="Self.j_quote_item_supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_quote_items">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quote_item_supplier">
+              <PropertyRef Name="quote_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_j_quote_item_supplier_j_users">
+          <End Role="j_users" Type="Self.j_users" Multiplicity="0..1" />
+          <End Role="j_quote_item_supplier" Type="Self.j_quote_item_supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quote_item_supplier">
+              <PropertyRef Name="accepted_by_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_j_supplier_branches_j_suppliers">
+          <End Role="j_suppliers" Type="Self.j_suppliers" Multiplicity="0..1" />
+          <End Role="j_supplier_branches" Type="Self.j_supplier_branches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_suppliers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_supplier_branches">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_j_user_site_access_j_sites">
+          <End Role="j_sites" Type="Self.j_sites" Multiplicity="1" />
+          <End Role="j_user_site_access" Type="Self.j_user_site_access" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_sites">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_user_site_access">
+              <PropertyRef Name="site_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_j_user_site_access_j_user_site_access">
+          <End Role="j_users" Type="Self.j_users" Multiplicity="1" />
+          <End Role="j_user_site_access" Type="Self.j_user_site_access" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_user_site_access">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplier">
+          <End Role="j_supplier_branches" Type="Self.j_supplier_branches" Multiplicity="1" />
+          <End Role="j_quote_item_supplier" Type="Self.j_quote_item_supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_supplier_branches">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quote_item_supplier">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tech">
+          <End Role="j_techs" Type="Self.j_techs" Multiplicity="0..1" />
+          <End Role="j_quotes" Type="Self.j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_techs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="tech_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_update_user">
+          <End Role="j_users" Type="Self.j_users" Multiplicity="1" />
+          <End Role="j_quotes" Type="Self.j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="update_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vehicle">
+          <End Role="j_vehicles" Type="Self.j_vehicles" Multiplicity="1" />
+          <End Role="j_quotes" Type="Self.j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_vehicles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="vehicle_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JobCostProModelStoreContainer">
+          <EntitySet Name="j_customers" EntityType="Self.j_customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_errors" EntityType="Self.j_errors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_job_codes" EntityType="Self.j_job_codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_quote_item_supplier" EntityType="Self.j_quote_item_supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_quote_items" EntityType="Self.j_quote_items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_quote_status" EntityType="Self.j_quote_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_quotes" EntityType="Self.j_quotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_sites" EntityType="Self.j_sites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_supplier_branches" EntityType="Self.j_supplier_branches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_suppliers" EntityType="Self.j_suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_techs" EntityType="Self.j_techs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_user_site_access" EntityType="Self.j_user_site_access" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_users" EntityType="Self.j_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_vehicle_models" EntityType="Self.j_vehicle_models" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="j_vehicles" EntityType="Self.j_vehicles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_create_user" Association="Self.FK_create_user">
+            <End Role="j_users" EntitySet="j_users" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer" Association="Self.FK_customer">
+            <End Role="j_customers" EntitySet="j_customers" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_items" Association="Self.FK_items">
+            <End Role="j_quotes" EntitySet="j_quotes" />
+            <End Role="j_quote_items" EntitySet="j_quote_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_j_quote_item_supplier_j_quote_items" Association="Self.FK_j_quote_item_supplier_j_quote_items">
+            <End Role="j_quote_items" EntitySet="j_quote_items" />
+            <End Role="j_quote_item_supplier" EntitySet="j_quote_item_supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_j_quote_item_supplier_j_users" Association="Self.FK_j_quote_item_supplier_j_users">
+            <End Role="j_users" EntitySet="j_users" />
+            <End Role="j_quote_item_supplier" EntitySet="j_quote_item_supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_j_supplier_branches_j_suppliers" Association="Self.FK_j_supplier_branches_j_suppliers">
+            <End Role="j_suppliers" EntitySet="j_suppliers" />
+            <End Role="j_supplier_branches" EntitySet="j_supplier_branches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_j_user_site_access_j_sites" Association="Self.FK_j_user_site_access_j_sites">
+            <End Role="j_sites" EntitySet="j_sites" />
+            <End Role="j_user_site_access" EntitySet="j_user_site_access" />
+          </AssociationSet>
+          <AssociationSet Name="FK_j_user_site_access_j_user_site_access" Association="Self.FK_j_user_site_access_j_user_site_access">
+            <End Role="j_users" EntitySet="j_users" />
+            <End Role="j_user_site_access" EntitySet="j_user_site_access" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplier" Association="Self.FK_supplier">
+            <End Role="j_supplier_branches" EntitySet="j_supplier_branches" />
+            <End Role="j_quote_item_supplier" EntitySet="j_quote_item_supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tech" Association="Self.FK_tech">
+            <End Role="j_techs" EntitySet="j_techs" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_update_user" Association="Self.FK_update_user">
+            <End Role="j_users" EntitySet="j_users" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vehicle" Association="Self.FK_vehicle">
+            <End Role="j_vehicles" EntitySet="j_vehicles" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JobCostProModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="JobCostProEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="j_customers" EntityType="JobCostProModel.j_customers" />
+          <EntitySet Name="j_job_codes" EntityType="JobCostProModel.j_job_codes" />
+          <EntitySet Name="j_quote_item_supplier" EntityType="JobCostProModel.j_quote_item_supplier" />
+          <EntitySet Name="j_quote_items" EntityType="JobCostProModel.j_quote_items" />
+          <EntitySet Name="j_quotes" EntityType="JobCostProModel.j_quotes" />
+          <EntitySet Name="j_techs" EntityType="JobCostProModel.j_techs" />
+          <EntitySet Name="j_users" EntityType="JobCostProModel.j_users" />
+          <EntitySet Name="j_vehicle_models" EntityType="JobCostProModel.j_vehicle_models" />
+          <EntitySet Name="j_vehicles" EntityType="JobCostProModel.j_vehicles" />
+          <AssociationSet Name="FK_customer" Association="JobCostProModel.FK_customer">
+            <End Role="j_customers" EntitySet="j_customers" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_items" Association="JobCostProModel.FK_items">
+            <End Role="j_quotes" EntitySet="j_quotes" />
+            <End Role="j_quote_items" EntitySet="j_quote_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_create_user" Association="JobCostProModel.FK_create_user">
+            <End Role="j_users" EntitySet="j_users" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tech" Association="JobCostProModel.FK_tech">
+            <End Role="j_techs" EntitySet="j_techs" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_update_user" Association="JobCostProModel.FK_update_user">
+            <End Role="j_users" EntitySet="j_users" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vehicle" Association="JobCostProModel.FK_vehicle">
+            <End Role="j_vehicles" EntitySet="j_vehicles" />
+            <End Role="j_quotes" EntitySet="j_quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_j_quote_item_supplier_j_quote_items" Association="JobCostProModel.FK_j_quote_item_supplier_j_quote_items">
+            <End Role="j_quote_items" EntitySet="j_quote_items" />
+            <End Role="j_quote_item_supplier" EntitySet="j_quote_item_supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_j_quote_item_supplier_j_users" Association="JobCostProModel.FK_j_quote_item_supplier_j_users">
+            <End Role="j_users" EntitySet="j_users" />
+            <End Role="j_quote_item_supplier" EntitySet="j_quote_item_supplier" />
+          </AssociationSet>
+          <EntitySet Name="j_supplier_branches" EntityType="JobCostProModel.j_supplier_branches" />
+          <EntitySet Name="j_suppliers" EntityType="JobCostProModel.j_suppliers" />
+          <AssociationSet Name="FK_supplier" Association="JobCostProModel.FK_supplier">
+            <End Role="j_supplier_branches" EntitySet="j_supplier_branches" />
+            <End Role="j_quote_item_supplier" EntitySet="j_quote_item_supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_j_supplier_branches_j_suppliers" Association="JobCostProModel.FK_j_supplier_branches_j_suppliers">
+            <End Role="j_suppliers" EntitySet="j_suppliers" />
+            <End Role="j_supplier_branches" EntitySet="j_supplier_branches" />
+          </AssociationSet>
+          <EntitySet Name="j_errors" EntityType="JobCostProModel.j_errors" />
+          <EntitySet Name="j_quote_status" EntityType="JobCostProModel.j_quote_status" />
+          <EntitySet Name="j_sites" EntityType="JobCostProModel.j_sites" />
+          <AssociationSet Name="j_user_site_access" Association="JobCostProModel.j_user_site_access">
+            <End Role="j_sites" EntitySet="j_sites" />
+            <End Role="j_users" EntitySet="j_users" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="j_customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mobile_no" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="home_no" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="work_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="alt_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="reg_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="vat_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="company_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="postal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="site_access_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="j_job_codes">
+          <Key>
+            <PropertyRef Name="code" />
+            <PropertyRef Name="site_access_id" />
+          </Key>
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cost" Type="Int32" Nullable="false" />
+          <Property Name="markup" Type="Int32" Nullable="false" />
+          <Property Name="standard_hours" Type="Int32" Nullable="false" />
+          <Property Name="standard_volume" Type="Int32" Nullable="false" />
+          <Property Name="labour_rate" Type="Int32" Nullable="false" />
+          <Property Name="site_access_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_quote_item_supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="supplier_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="quote_item_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="quoted_price" Type="Int32" Nullable="false" />
+          <Property Name="part_number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="quoted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quoted_datetime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="accepted_datetime" Type="DateTime" Precision="7" />
+          <Property Name="accepted_by_user_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="JobCostProModel.FK_j_quote_item_supplier_j_users" FromRole="j_quote_item_supplier" ToRole="j_users" />
+          <NavigationProperty Name="supplier" Relationship="JobCostProModel.FK_supplier" FromRole="j_quote_item_supplier" ToRole="j_supplier_branches" />
+        </EntityType>
+        <EntityType Name="j_quote_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="quote_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="sort_order" Type="Int32" Nullable="false" />
+          <Property Name="job_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="labour_hours" Type="Int32" Nullable="false" />
+          <Property Name="labour_rate" Type="Int32" Nullable="false" />
+          <Property Name="part_rate" Type="Int32" Nullable="false" />
+          <Property Name="part_markup" Type="Int32" Nullable="false" />
+          <Property Name="part_quantity" Type="Int32" Nullable="false" />
+          <Property Name="auth" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="subquotes" Relationship="JobCostProModel.FK_j_quote_item_supplier_j_quote_items" FromRole="j_quote_items" ToRole="j_quote_item_supplier" />
+        </EntityType>
+        <EntityType Name="j_quotes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="ro_number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="branch_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="customer_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="vehicle_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="create_user_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="create_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_user_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="update_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="checkin_odometer" Type="Int32" Nullable="false" />
+          <Property Name="tech_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="customer" Relationship="JobCostProModel.FK_customer" FromRole="j_quotes" ToRole="j_customers" />
+          <NavigationProperty Name="items" Relationship="JobCostProModel.FK_items" FromRole="j_quotes" ToRole="j_quote_items" />
+          <NavigationProperty Name="create_user" Relationship="JobCostProModel.FK_create_user" FromRole="j_quotes" ToRole="j_users" />
+          <NavigationProperty Name="tech" Relationship="JobCostProModel.FK_tech" FromRole="j_quotes" ToRole="j_techs" />
+          <NavigationProperty Name="update_user" Relationship="JobCostProModel.FK_update_user" FromRole="j_quotes" ToRole="j_users" />
+          <NavigationProperty Name="vehicle" Relationship="JobCostProModel.FK_vehicle" FromRole="j_quotes" ToRole="j_vehicles" />
+          <Property Name="site_access" Type="String" MaxLength="36" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="j_techs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="site_access_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="j_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tel_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="password_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="site_access" Relationship="JobCostProModel.j_user_site_access" FromRole="j_users" ToRole="j_sites" />
+        </EntityType>
+        <EntityType Name="j_vehicle_models">
+          <Key>
+            <PropertyRef Name="brand" />
+            <PropertyRef Name="model" />
+          </Key>
+          <Property Name="brand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="j_vehicles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="customer_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="vin_number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="engine_number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="registration" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="brand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="site_access_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_customer">
+          <End Type="JobCostProModel.j_customers" Role="j_customers" Multiplicity="1" />
+          <End Type="JobCostProModel.j_quotes" Role="j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_items">
+          <End Type="JobCostProModel.j_quotes" Role="j_quotes" Multiplicity="1" />
+          <End Type="JobCostProModel.j_quote_items" Role="j_quote_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_quotes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quote_items">
+              <PropertyRef Name="quote_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_create_user">
+          <End Type="JobCostProModel.j_users" Role="j_users" Multiplicity="1" />
+          <End Type="JobCostProModel.j_quotes" Role="j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="create_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tech">
+          <End Type="JobCostProModel.j_techs" Role="j_techs" Multiplicity="0..1" />
+          <End Type="JobCostProModel.j_quotes" Role="j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_techs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="tech_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_update_user">
+          <End Type="JobCostProModel.j_users" Role="j_users" Multiplicity="1" />
+          <End Type="JobCostProModel.j_quotes" Role="j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="update_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vehicle">
+          <End Type="JobCostProModel.j_vehicles" Role="j_vehicles" Multiplicity="1" />
+          <End Type="JobCostProModel.j_quotes" Role="j_quotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_vehicles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quotes">
+              <PropertyRef Name="vehicle_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_j_quote_item_supplier_j_quote_items">
+          <End Type="JobCostProModel.j_quote_items" Role="j_quote_items" Multiplicity="1" />
+          <End Type="JobCostProModel.j_quote_item_supplier" Role="j_quote_item_supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_quote_items">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quote_item_supplier">
+              <PropertyRef Name="quote_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_j_quote_item_supplier_j_users">
+          <End Type="JobCostProModel.j_users" Role="j_users" Multiplicity="0..1" />
+          <End Type="JobCostProModel.j_quote_item_supplier" Role="j_quote_item_supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quote_item_supplier">
+              <PropertyRef Name="accepted_by_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="j_supplier_branches">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="supplier_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lat" Type="Decimal" Precision="16" Scale="8" />
+          <Property Name="lgn" Type="Decimal" Precision="16" Scale="8" />
+          <NavigationProperty Name="supplier" Relationship="JobCostProModel.FK_j_supplier_branches_j_suppliers" FromRole="j_supplier_branches" ToRole="j_suppliers" />
+          <Property Name="contact_person" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contact_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="postal" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="j_suppliers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="reg_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="vat_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tax_clearance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="credit_limit" Type="Int32" />
+          <Property Name="credit_balance" Type="Int32" />
+          <Property Name="tel_num" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="contact_person" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contact_no" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="after_hours_no" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="standby_person" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="standby_no" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="standby_email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address_line_3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="postal" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_supplier">
+          <End Type="JobCostProModel.j_supplier_branches" Role="j_supplier_branches" Multiplicity="1" />
+          <End Type="JobCostProModel.j_quote_item_supplier" Role="j_quote_item_supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_supplier_branches">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_quote_item_supplier">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_j_supplier_branches_j_suppliers">
+          <End Type="JobCostProModel.j_suppliers" Role="j_suppliers" Multiplicity="0..1" />
+          <End Type="JobCostProModel.j_supplier_branches" Role="j_supplier_branches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="j_suppliers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="j_supplier_branches">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="j_errors">
+          <Key>
+            <PropertyRef Name="error_id" />
+          </Key>
+          <Property Name="error_id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="data" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="j_quote_status">
+          <Key>
+            <PropertyRef Name="status" />
+          </Key>
+          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sort_order" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="j_sites">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="JobCostProModel.j_user_site_access" FromRole="j_sites" ToRole="j_users" />
+        </EntityType>
+        <Association Name="j_user_site_access">
+          <End Type="JobCostProModel.j_sites" Role="j_sites" Multiplicity="*" />
+          <End Type="JobCostProModel.j_users" Role="j_users" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JobCostProModelStoreContainer" CdmEntityContainer="JobCostProEntities">
+          <EntitySetMapping Name="j_customers">
+            <EntityTypeMapping TypeName="JobCostProModel.j_customers">
+              <MappingFragment StoreEntitySet="j_customers">
+                <ScalarProperty Name="site_access_id" ColumnName="site_access_id" />
+                <ScalarProperty Name="address_line_3" ColumnName="address_line_3" />
+                <ScalarProperty Name="address_line_2" ColumnName="address_line_2" />
+                <ScalarProperty Name="address_line_1" ColumnName="address_line_1" />
+                <ScalarProperty Name="postal" ColumnName="postal" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="vat_no" ColumnName="vat_no" />
+                <ScalarProperty Name="reg_number" ColumnName="reg_number" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="alt_no" ColumnName="alt_no" />
+                <ScalarProperty Name="work_no" ColumnName="work_no" />
+                <ScalarProperty Name="home_no" ColumnName="home_no" />
+                <ScalarProperty Name="mobile_no" ColumnName="mobile_no" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_job_codes">
+            <EntityTypeMapping TypeName="JobCostProModel.j_job_codes">
+              <MappingFragment StoreEntitySet="j_job_codes">
+                <ScalarProperty Name="site_access_id" ColumnName="site_access_id" />
+                <ScalarProperty Name="labour_rate" ColumnName="labour_rate" />
+                <ScalarProperty Name="standard_volume" ColumnName="standard_volume" />
+                <ScalarProperty Name="standard_hours" ColumnName="standard_hours" />
+                <ScalarProperty Name="markup" ColumnName="markup" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_quote_item_supplier">
+            <EntityTypeMapping TypeName="JobCostProModel.j_quote_item_supplier">
+              <MappingFragment StoreEntitySet="j_quote_item_supplier">
+                <ScalarProperty Name="remarks" ColumnName="remarks" />
+                <ScalarProperty Name="accepted_by_user_id" ColumnName="accepted_by_user_id" />
+                <ScalarProperty Name="accepted_datetime" ColumnName="accepted_datetime" />
+                <ScalarProperty Name="quoted_datetime" ColumnName="quoted_datetime" />
+                <ScalarProperty Name="quoted_by" ColumnName="quoted_by" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="part_number" ColumnName="part_number" />
+                <ScalarProperty Name="quoted_price" ColumnName="quoted_price" />
+                <ScalarProperty Name="quote_item_id" ColumnName="quote_item_id" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_quote_items">
+            <EntityTypeMapping TypeName="JobCostProModel.j_quote_items">
+              <MappingFragment StoreEntitySet="j_quote_items">
+                <ScalarProperty Name="auth" ColumnName="auth" />
+                <ScalarProperty Name="part_quantity" ColumnName="part_quantity" />
+                <ScalarProperty Name="part_markup" ColumnName="part_markup" />
+                <ScalarProperty Name="part_rate" ColumnName="part_rate" />
+                <ScalarProperty Name="labour_rate" ColumnName="labour_rate" />
+                <ScalarProperty Name="labour_hours" ColumnName="labour_hours" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="job_code" ColumnName="job_code" />
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+                <ScalarProperty Name="quote_id" ColumnName="quote_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_quotes">
+            <EntityTypeMapping TypeName="JobCostProModel.j_quotes">
+              <MappingFragment StoreEntitySet="j_quotes">
+                <ScalarProperty Name="site_access" ColumnName="site_access" />
+                <ScalarProperty Name="tech_id" ColumnName="tech_id" />
+                <ScalarProperty Name="checkin_odometer" ColumnName="checkin_odometer" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="update_datetime" ColumnName="update_datetime" />
+                <ScalarProperty Name="update_user_id" ColumnName="update_user_id" />
+                <ScalarProperty Name="create_datetime" ColumnName="create_datetime" />
+                <ScalarProperty Name="create_user_id" ColumnName="create_user_id" />
+                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+                <ScalarProperty Name="ro_number" ColumnName="ro_number" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_techs">
+            <EntityTypeMapping TypeName="JobCostProModel.j_techs">
+              <MappingFragment StoreEntitySet="j_techs">
+                <ScalarProperty Name="site_access_id" ColumnName="site_access_id" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_users">
+            <EntityTypeMapping TypeName="JobCostProModel.j_users">
+              <MappingFragment StoreEntitySet="j_users">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="password_date" ColumnName="password_date" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="tel_no" ColumnName="tel_no" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_vehicle_models">
+            <EntityTypeMapping TypeName="JobCostProModel.j_vehicle_models">
+              <MappingFragment StoreEntitySet="j_vehicle_models">
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="brand" ColumnName="brand" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_vehicles">
+            <EntityTypeMapping TypeName="JobCostProModel.j_vehicles">
+              <MappingFragment StoreEntitySet="j_vehicles">
+                <ScalarProperty Name="site_access_id" ColumnName="site_access_id" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="brand" ColumnName="brand" />
+                <ScalarProperty Name="registration" ColumnName="registration" />
+                <ScalarProperty Name="engine_number" ColumnName="engine_number" />
+                <ScalarProperty Name="vin_number" ColumnName="vin_number" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_supplier_branches">
+            <EntityTypeMapping TypeName="JobCostProModel.j_supplier_branches">
+              <MappingFragment StoreEntitySet="j_supplier_branches">
+                <ScalarProperty Name="postal" ColumnName="postal" />
+                <ScalarProperty Name="address_line_3" ColumnName="address_line_3" />
+                <ScalarProperty Name="address_line_2" ColumnName="address_line_2" />
+                <ScalarProperty Name="address_line_1" ColumnName="address_line_1" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contact_number" ColumnName="contact_number" />
+                <ScalarProperty Name="contact_person" ColumnName="contact_person" />
+                <ScalarProperty Name="lgn" ColumnName="lgn" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_suppliers">
+            <EntityTypeMapping TypeName="JobCostProModel.j_suppliers">
+              <MappingFragment StoreEntitySet="j_suppliers">
+                <ScalarProperty Name="postal" ColumnName="postal" />
+                <ScalarProperty Name="address_line_3" ColumnName="address_line_3" />
+                <ScalarProperty Name="address_line_2" ColumnName="address_line_2" />
+                <ScalarProperty Name="address_line_1" ColumnName="address_line_1" />
+                <ScalarProperty Name="standby_email" ColumnName="standby_email" />
+                <ScalarProperty Name="standby_no" ColumnName="standby_no" />
+                <ScalarProperty Name="standby_person" ColumnName="standby_person" />
+                <ScalarProperty Name="after_hours_no" ColumnName="after_hours_no" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contact_no" ColumnName="contact_no" />
+                <ScalarProperty Name="contact_person" ColumnName="contact_person" />
+                <ScalarProperty Name="tel_num" ColumnName="tel_num" />
+                <ScalarProperty Name="credit_balance" ColumnName="credit_balance" />
+                <ScalarProperty Name="credit_limit" ColumnName="credit_limit" />
+                <ScalarProperty Name="tax_clearance" ColumnName="tax_clearance" />
+                <ScalarProperty Name="vat_no" ColumnName="vat_no" />
+                <ScalarProperty Name="reg_no" ColumnName="reg_no" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_errors">
+            <EntityTypeMapping TypeName="JobCostProModel.j_errors">
+              <MappingFragment StoreEntitySet="j_errors">
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="error_id" ColumnName="error_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_quote_status">
+            <EntityTypeMapping TypeName="JobCostProModel.j_quote_status">
+              <MappingFragment StoreEntitySet="j_quote_status">
+                <ScalarProperty Name="sort_order" ColumnName="sort_order" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="j_sites">
+            <EntityTypeMapping TypeName="JobCostProModel.j_sites">
+              <MappingFragment StoreEntitySet="j_sites">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="j_user_site_access" TypeName="JobCostProModel.j_user_site_access" StoreEntitySet="j_user_site_access">
+            <EndProperty Name="j_users">
+              <ScalarProperty Name="id" ColumnName="user_id" />
+            </EndProperty>
+            <EndProperty Name="j_sites">
+              <ScalarProperty Name="id" ColumnName="site_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

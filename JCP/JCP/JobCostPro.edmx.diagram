@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8821f92ede034f4b85ac518e595dea6b" Name="Diagram1">
+        <EntityTypeShape EntityType="JobCostProModel.j_customers" Width="1.5" PointX="0.75" PointY="8.375" />
+        <EntityTypeShape EntityType="JobCostProModel.j_job_codes" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="JobCostProModel.j_quote_item_supplier" Width="1.5" PointX="5.375" PointY="7" />
+        <EntityTypeShape EntityType="JobCostProModel.j_quote_items" Width="1.5" PointX="5.25" PointY="1.5" />
+        <EntityTypeShape EntityType="JobCostProModel.j_quotes" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="JobCostProModel.j_techs" Width="1.5" PointX="0.75" PointY="5.875" />
+        <EntityTypeShape EntityType="JobCostProModel.j_users" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="JobCostProModel.j_vehicle_models" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="JobCostProModel.j_vehicles" Width="1.5" PointX="0.75" PointY="12.875" />
+        <AssociationConnector Association="JobCostProModel.FK_customer" />
+        <AssociationConnector Association="JobCostProModel.FK_items" />
+        <AssociationConnector Association="JobCostProModel.FK_create_user" />
+        <AssociationConnector Association="JobCostProModel.FK_tech" />
+        <AssociationConnector Association="JobCostProModel.FK_update_user" />
+        <AssociationConnector Association="JobCostProModel.FK_vehicle" />
+        <AssociationConnector Association="JobCostProModel.FK_j_quote_item_supplier_j_quote_items" />
+        <AssociationConnector Association="JobCostProModel.FK_j_quote_item_supplier_j_users" />
+        <EntityTypeShape EntityType="JobCostProModel.j_supplier_branches" Width="1.5" PointX="9.625" PointY="8" />
+        <EntityTypeShape EntityType="JobCostProModel.j_suppliers" Width="1.5" PointX="7.375" PointY="8.5" />
+        <AssociationConnector Association="JobCostProModel.FK_supplier" />
+        <AssociationConnector Association="JobCostProModel.FK_j_supplier_branches_j_suppliers" />
+        <EntityTypeShape EntityType="JobCostProModel.j_errors" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JobCostProModel.j_quote_status" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="JobCostProModel.j_sites" Width="1.5" PointX="0.75" PointY="16.375" />
+        <AssociationConnector Association="JobCostProModel.j_user_site_access" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
