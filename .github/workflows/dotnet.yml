@@ -23,11 +23,13 @@ jobs:
     - name: Fetch Node
       uses: actions/setup-node@v3
       with:
-         node-version: 16
+          node-version: 16
+          cache: 'npm'
+          cache-dependency-path: jcpfrontend/package-lock.json
 
     - name: Run prod.bat
       run: .\prod.bat
-      
+    
     - name: CD to code
       run: cd JCP
 
@@ -35,12 +37,12 @@ jobs:
       run: mkdir _build
       
     - name: Restore Packages
-      run: nuget restore EzRep.sln
+      run: nuget restore JCP.sln
 
     - name: Build Solution
       run: |
-        msbuild.exe JCPn /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
-        `
+        msbuild.exe JCP.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
+        
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
