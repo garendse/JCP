@@ -31,7 +31,7 @@ jobs:
       run: .\prod.bat
     
     - name: CD to code
-      run: cd JCP
+      run: cd JCP && dir
 
     - name: Create Build Directory
       run: mkdir _build
