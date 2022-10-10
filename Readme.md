@@ -33,4 +33,4 @@ For all steps make sure when installing to select add to PATH and install for al
 2. CLick on the source control icon to the left
 3. Stage changes by hovering over the files you want to push and clicking the + button
 4. Type a commit message
-5. Click the commit arrow next to the commit button and select Commit and push.
+5. Click the commit button or CTRL + enter
