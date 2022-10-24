@@ -56,7 +56,7 @@ const links: link[] = [
         access: ["ALL"],
       },
       {
-        name: "Users Support",
+        name: "Users",
         url: "/maintain/usersupport",
         access: ["ALL"],
       },
