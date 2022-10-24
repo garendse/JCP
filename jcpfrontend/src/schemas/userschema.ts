@@ -1,7 +1,7 @@
 import { AdminTableSchema } from "../components/AdminTable";
 
 const schema: AdminTableSchema = {
-  api_suffix: "/api/User",
+  api_suffix: "/api/Users",
   columns: [
     {
       name: "Username",
@@ -19,6 +19,11 @@ const schema: AdminTableSchema = {
       type: "textReadonly",
     },
     {
+      name: "Password",
+      prop_name: "password",
+      type: "passwordReadonly",
+    },
+    {
       name: "Role",
       prop_name: "role",
       type: "textReadonly",
@@ -30,7 +35,6 @@ const schema: AdminTableSchema = {
     },
   ],
   name: "Users",
-  noadd: true,
   pk: "id",
 };
 

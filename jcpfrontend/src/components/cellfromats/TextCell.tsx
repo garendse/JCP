@@ -6,6 +6,8 @@ export const TextCell = memo(
     setValue: (newValue: string | number) => void;
     number?: boolean;
     valid?: boolean;
+    readOnly?: boolean;
+    password?: boolean;
   }) => {
     return (
       <input
@@ -14,8 +16,9 @@ export const TextCell = memo(
           (props.valid === false ? " bg-red-300 " : "") +
           (props.number ? " text-right appearance-none" : "")
         }
-        type={props.number ? "number" : "text"}
+        type={props.password ? "password" : props.number ? "number" : "text"}
         value={props.value}
+        readOnly={props.readOnly}
         size={props.value.toString().length}
         onChange={(e) =>
           props.setValue(props.number ? Number(e.target.value) : e.target.value)

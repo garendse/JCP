@@ -19,7 +19,9 @@ export interface SchemaColumn {
     | "checkbox"
     | "checkboxReadonly"
     | "child"
-    | "search";
+    | "search"
+    | "password"
+    | "passwordReadonly";
 }
 
 export interface AdminTableSchema {
@@ -83,6 +85,9 @@ export function AdminTable(props: AdminTableSchema) {
           case "text":
           case "textReadonly":
             blank[col.prop_name] = "";
+          case "password":
+          case "passwordReadonly":
+            blank[col.prop_name] = "";
         }
       }
       Object.keys(props.onaddcustom ?? {}).forEach((key: string) => {
@@ -101,6 +106,9 @@ export function AdminTable(props: AdminTableSchema) {
         ndata[y][name] = val.numberVal;
         break;
       case "text":
+        ndata[y][name] = val.stringVal;
+        break;
+      case "password":
         ndata[y][name] = val.stringVal;
         break;
     }
@@ -169,6 +177,10 @@ export function AdminTable(props: AdminTableSchema) {
             case "textReadonly":
               type = "text";
               break;
+            case "password":
+            case "passwordReadonly":
+              type = "password";
+              break;
           }
 
         const cellValue = val[col.prop_name];
@@ -190,6 +202,9 @@ export function AdminTable(props: AdminTableSchema) {
             break;
           case "text":
           case "textReadonly":
+            cell.stringVal = cellValue;
+          case "password":
+          case "passwordReadonly":
             cell.stringVal = cellValue;
         }
         return cell;
@@ -215,6 +230,10 @@ export function AdminTable(props: AdminTableSchema) {
         case "textReadonly":
           type = "text";
           break;
+        case "password":
+        case "passwordReadonly":
+          type = "password";
+          break;
       }
 
       const cell: Cell = {
@@ -235,6 +254,9 @@ export function AdminTable(props: AdminTableSchema) {
           break;
         case "text":
         case "textReadonly":
+          cell.stringVal = "";
+        case "password":
+        case "passwordReadonly":
           cell.stringVal = "";
       }
       return cell;

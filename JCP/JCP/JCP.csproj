@@ -183,7 +183,7 @@
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\TechsController.cs" />
     <Compile Include="Controllers\UserAuthController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="Filters\AddChallengeOnUnauthorizedResult.cs" />
     <Compile Include="Filters\AuthenticationFailureResult.cs" />

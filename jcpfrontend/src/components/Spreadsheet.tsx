@@ -29,7 +29,9 @@ export interface Cell {
     | "child"
     | "search"
     | "datetime-local"
-    | "datetime-local-readonly";
+    | "datetime-local-readonly"
+    | "password"
+    | "passwordReadonly";
   stringVal?: string;
   numberVal?: number;
   datetimeVal?: Date;
@@ -175,6 +177,29 @@ function GetCell(props: { cell: Cell; onChange: (NewCell: Cell) => void }) {
           }}
         />
       );
+    case "password":
+      return (
+        <TextCell
+          value={props.cell.stringVal ?? "****"}
+          password
+          setValue={(val) => {
+            props.onChange({
+              ...props.cell,
+              stringVal: val
+                .toString()
+                .substring(
+                  0,
+                  Math.min(
+                    props.cell.validate?.textLen ?? Number.MAX_SAFE_INTEGER,
+                    val.toString().length
+                  )
+                ),
+            });
+          }}
+        />
+      );
+    case "passwordReadonly":
+      return <TextCell password value={"****"} readOnly setValue={() => {}} />;
 
     case "child":
       if (props.cell.childVal !== undefined) return props.cell.childVal;

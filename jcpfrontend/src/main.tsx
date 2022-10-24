@@ -23,7 +23,6 @@ import supplier from "./schemas/supplier";
 import { MultiAdminTable } from "./components/MultiAdminTable";
 import supplier_branches from "./schemas/supplier_branches";
 import userschema from "./schemas/userschema";
-import { UserSupport } from "./routes/UserSupport";
 import techs from "./schemas/techs";
 import vehicles from "./schemas/vehicles";
 
@@ -81,7 +80,10 @@ if (container) {
                   path="/maintain/vehicles"
                   element={<AdminTable key="vehicles" {...vehicles} />}
                 />
-                <Route path="/maintain/usersupport" element={<UserSupport />} />
+                <Route
+                  path="/maintain/usersupport"
+                  element={<AdminTable key="users" {...userschema} />}
+                />
               </Route>
               <Route
                 path="/useradmin"

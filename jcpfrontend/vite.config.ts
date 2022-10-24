@@ -11,6 +11,6 @@ export default defineConfig(({ command, mode }) => {
     server: {
       port: 3000,
     },
-    base: `${env.JCP_BASE_URL}/`,
+    base: `${env.JCP_BASE_URL}`,
   };
 });
