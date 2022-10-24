@@ -55,11 +55,6 @@ const links: link[] = [
         url: "/maintain/vehicles",
         access: ["ALL"],
       },
-      {
-        name: "Users",
-        url: "/maintain/usersupport",
-        access: ["ALL"],
-      },
     ],
   },
 ];

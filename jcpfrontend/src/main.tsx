@@ -70,7 +70,7 @@ if (container) {
                 />
                 <Route
                   path="/maintain/userlist"
-                  element={<AdminTable key="br" {...userschema} />}
+                  element={<AdminTable key="users" {...userschema} />}
                 />
                 <Route
                   path="/maintain/techs"
@@ -79,10 +79,6 @@ if (container) {
                 <Route
                   path="/maintain/vehicles"
                   element={<AdminTable key="vehicles" {...vehicles} />}
-                />
-                <Route
-                  path="/maintain/usersupport"
-                  element={<AdminTable key="users" {...userschema} />}
                 />
               </Route>
               <Route
