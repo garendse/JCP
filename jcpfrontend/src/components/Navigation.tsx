@@ -26,6 +26,11 @@ const links: link[] = [
         access: ["ALL"],
       },
       {
+        name: "Job Codes Parameters",
+        url: "/maintain/job-code-params",
+        access: ["ALL"],
+      },
+      {
         name: "Customers",
         url: "/maintain/customer",
         access: ["ALL"],

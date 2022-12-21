@@ -334,7 +334,9 @@ export function CheckIn() {
           {(odometer ?? 0) > 0 && ok && (
             <>
               <div className="mx-3 -mt-2">
-                <label htmlFor="odometer">Ro Number:</label>
+                <label htmlFor="odometer">
+                  Ro Number (leave blank for auto generated):
+                </label>
                 <input
                   id="odometer"
                   className="m-2 rounded-md w-72"

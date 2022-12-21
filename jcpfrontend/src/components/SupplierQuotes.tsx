@@ -48,7 +48,7 @@ export function SupplierQuotes(props: {
       const cells: Cell[] = [
         {
           type: "textReadonly",
-          stringVal: val.supplier.supplier.name,
+          stringVal: val.supplier?.supplier?.name ?? "",
         },
         {
           type: "textReadonly",

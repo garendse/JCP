@@ -30,8 +30,6 @@ export function QuoteEdit() {
 
   const [error, setError] = useState<string | undefined>(undefined);
 
-  const onJobPage = !String(location.pathname).includes("parts");
-
   const dateCreated = new Date(
     Date.parse(quote?.create_datetime ?? "")
   ).toString();
@@ -56,15 +54,14 @@ export function QuoteEdit() {
   }, []);
 
   if (quote?.id != params.quoteId && !error) return <Loading />;
-  else if (error) {
-    return (
-      <div className="flex justify-center">
-        <h1>{error}</h1>
-      </div>
-    );
-  } else
+  else
     return (
       <>
+        {error && (
+          <div className="flex justify-center">
+            <h1>{error}</h1>
+          </div>
+        )}
         <div className="bg-slate-200">
           <p className="text-2xl m-2 mb-0 text-center">
             <b>Ro Number:</b> <span className="px-1">{quote?.ro_number}</span>
@@ -109,6 +106,7 @@ export function QuoteEdit() {
                 value={quote?.status ?? ""}
                 onChange={(e) => {
                   if (quote) setQuoteData({ ...quote, status: e.target.value });
+
                   setChanged(true);
                 }}
               >
@@ -128,6 +126,7 @@ export function QuoteEdit() {
                 onChange={(e) => {
                   if (quote)
                     setQuoteData({ ...quote, tech_id: e.target.value });
+
                   setChanged(true);
                 }}
               >

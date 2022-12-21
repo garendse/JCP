@@ -5,6 +5,7 @@ import { Cell, Spreadsheet } from "./Spreadsheet";
 
 import save from "../../images/icons/save-solid.svg";
 import cancel from "../../images/icons/cancel_FILL0_wght400_GRAD0_opsz48.svg";
+import Swal from "sweetalert2";
 
 export interface SchemaColumn {
   name: string;
@@ -66,7 +67,7 @@ export function AdminTable(props: AdminTableSchema) {
 
   let onChange = (y: number, x: number, val: Cell) => {
     let ndata = [...data];
-    let name = props.columns[x].prop_name;
+    let name = props.columns[x - 1].prop_name;
 
     if (ndata.length <= y) {
       let blank: any = {};
@@ -121,30 +122,69 @@ export function AdminTable(props: AdminTableSchema) {
     setData(ndata);
   };
 
-  const doSave = () => {
+  const doSave = async () => {
+    let error = false;
+    let error_descs: string[] = [];
     let ndata = [...data];
-    for (let row of ndata) {
+    for (let [i, row] of ndata.entries()) {
       if (row.flag == "changed") {
-        auth.requestv2(props.api_suffix + "/" + row[props.pk], {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(row),
-        });
+        await auth
+          .requestv2(
+            props.api_suffix + "/" + row[props.pk],
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(row),
+            },
+            false
+          )
+          .then(() => (row.flag = "unchanged"))
+          .catch((err) => {
+            error = true;
+            // @ts-ignore
+            if (typeof err.data == "object") {
+              error_descs.push(`Row ${i + 1}: ${err.data?.Message ?? ""}`);
+            } else if (typeof err.data == "string")
+              error_descs.push(`Row ${i + 1}: ${err.data ?? ""}`);
+          });
       }
       if (row.flag == "added") {
-        auth.requestv2(props.api_suffix, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(row),
-        });
+        await auth
+          .requestv2(
+            props.api_suffix,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(row),
+            },
+            false
+          )
+          .then(() => (row.flag = "unchanged"))
+          .catch((err) => {
+            error = true;
+            // @ts-ignore
+            if (typeof err.data == "object") {
+              error_descs.push(`Row ${i + 1}: ${err.data?.Message ?? ""}`);
+            } else if (typeof err.data == "string")
+              error_descs.push(`Row ${i + 1}: ${err.data ?? ""}`);
+          });
       }
-      row.flag = "unchanged";
     }
-    setChanged(false);
+    if (!error) {
+      setData(ndata);
+      setChanged(false);
+    } else {
+      if (error_descs.length > 0)
+        Swal.fire({
+          title: "Please confirm your data is correct!",
+          html: error_descs.join("<br>"),
+          icon: "error",
+        });
+    }
   };
 
   if (error)
@@ -156,34 +196,108 @@ export function AdminTable(props: AdminTableSchema) {
   if (!data) return <Loading />;
 
   const getMatrix = (): Cell[][] => {
-    let matrix = data.map((val: any) => {
-      return props.columns.map((col) => {
-        let type: typeof col.type = col.type;
-        if (val.flag == "added")
+    let matrix = data.map((val: any, i: number) => {
+      const numcell: Cell = {
+        type: "child",
+        childVal: (
+          <div className="flex justify-center px-1">
+            <span>{i + 1}</span>
+          </div>
+        ),
+      };
+      return [
+        numcell,
+        ...props.columns.map((col) => {
+          let type: typeof col.type = col.type;
+          if (val.flag == "added")
+            switch (col.type) {
+              case "checkbox":
+              case "checkboxReadonly":
+                type = "checkbox";
+                break;
+              case "currency":
+              case "currencyReadonly":
+                type = "currency";
+                break;
+              case "number":
+              case "numberReadonly":
+                type = "number";
+                break;
+              case "text":
+              case "textReadonly":
+                type = "text";
+                break;
+              case "password":
+              case "passwordReadonly":
+                type = "password";
+                break;
+            }
+
+          const cellValue = val[col.prop_name];
+          const cell: Cell = {
+            type: type,
+            propName: col.prop_name,
+            colspan: 1,
+          };
           switch (col.type) {
             case "checkbox":
             case "checkboxReadonly":
-              type = "checkbox";
+              cell.boolVal = !!cellValue;
               break;
             case "currency":
             case "currencyReadonly":
-              type = "currency";
-              break;
             case "number":
             case "numberReadonly":
-              type = "number";
+              cell.numberVal = cellValue;
               break;
             case "text":
             case "textReadonly":
-              type = "text";
-              break;
+              cell.stringVal = cellValue;
             case "password":
             case "passwordReadonly":
-              type = "password";
-              break;
+              cell.stringVal = cellValue;
           }
+          return cell;
+        }),
+      ];
+    });
 
-        const cellValue = val[col.prop_name];
+    const numcell: Cell = {
+      type: "child",
+      childVal: (
+        <div className="flex justify-center">
+          <span>{}</span>
+        </div>
+      ),
+    };
+
+    const blankrow = [
+      numcell,
+      ...props.columns.map((col) => {
+        let type: typeof col.type = "text";
+        switch (col.type) {
+          case "checkbox":
+          case "checkboxReadonly":
+            type = "checkbox";
+            break;
+          case "currency":
+          case "currencyReadonly":
+            type = "currency";
+            break;
+          case "number":
+          case "numberReadonly":
+            type = "number";
+            break;
+          case "text":
+          case "textReadonly":
+            type = "text";
+            break;
+          case "password":
+          case "passwordReadonly":
+            type = "password";
+            break;
+        }
+
         const cell: Cell = {
           type: type,
           propName: col.prop_name,
@@ -192,75 +306,24 @@ export function AdminTable(props: AdminTableSchema) {
         switch (col.type) {
           case "checkbox":
           case "checkboxReadonly":
-            cell.boolVal = !!cellValue;
+            cell.boolVal = false;
             break;
           case "currency":
           case "currencyReadonly":
           case "number":
           case "numberReadonly":
-            cell.numberVal = cellValue;
+            cell.numberVal = 0;
             break;
           case "text":
           case "textReadonly":
-            cell.stringVal = cellValue;
+            cell.stringVal = "";
           case "password":
           case "passwordReadonly":
-            cell.stringVal = cellValue;
+            cell.stringVal = "";
         }
         return cell;
-      });
-    });
-
-    const blankrow = props.columns.map((col) => {
-      let type: typeof col.type = "text";
-      switch (col.type) {
-        case "checkbox":
-        case "checkboxReadonly":
-          type = "checkbox";
-          break;
-        case "currency":
-        case "currencyReadonly":
-          type = "currency";
-          break;
-        case "number":
-        case "numberReadonly":
-          type = "number";
-          break;
-        case "text":
-        case "textReadonly":
-          type = "text";
-          break;
-        case "password":
-        case "passwordReadonly":
-          type = "password";
-          break;
-      }
-
-      const cell: Cell = {
-        type: type,
-        propName: col.prop_name,
-        colspan: 1,
-      };
-      switch (col.type) {
-        case "checkbox":
-        case "checkboxReadonly":
-          cell.boolVal = false;
-          break;
-        case "currency":
-        case "currencyReadonly":
-        case "number":
-        case "numberReadonly":
-          cell.numberVal = 0;
-          break;
-        case "text":
-        case "textReadonly":
-          cell.stringVal = "";
-        case "password":
-        case "passwordReadonly":
-          cell.stringVal = "";
-      }
-      return cell;
-    });
+      }),
+    ];
 
     if (props.noadd) return matrix;
 
@@ -286,7 +349,7 @@ export function AdminTable(props: AdminTableSchema) {
       </div>
       <div className={props.className}>
         <Spreadsheet
-          headerRow={props.columns.map((v) => v.name)}
+          headerRow={["#", ...props.columns.map((v) => v.name)]}
           cellMatrix={getMatrix()}
           onChange={onChange}
         />

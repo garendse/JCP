@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useAuth } from "../auth/AuthProvider";
 import { QuoteDTO } from "../DTO/QuoteDTO";
+import { QuoteItemDTO } from "../DTO/QuoteItemDTO";
+import { SupplierQuotesDTO } from "../DTO/SupplierQuotesDTO";
 
 interface QuoteContextType {
   quote: QuoteDTO | undefined;
@@ -31,24 +33,66 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
     setQuoteData(quote);
   };
 
-  const saveQuote = (setError: (val: string) => void) => {
+  const saveSubquotes = async (subquotes: SupplierQuotesDTO[]) => {
+    for (let i of subquotes) {
+      const { supplier, ...item } = i;
+      const id = i?.id ?? "";
+      auth.requestv2(`/api/QuoteItemSupplier/${id}`, {
+        method: i.id ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      });
+    }
+  };
+
+  const saveQuoteItems = async (items: QuoteItemDTO[]) => {
+    for (let i of items) {
+      const { subquotes, ...item } = i;
+
+      await saveSubquotes(i.subquotes);
+
+      auth.requestv2(`/api/QuoteItem/${item?.id}`, {
+        method: item.id ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      });
+    }
+  };
+
+  const saveQuote = async (setError: (val: string) => void) => {
     setChanged(false);
     setSaving(true);
 
+    if (!quoteData) return;
+
+    const {
+      vehicle,
+      items,
+      create_user,
+      customer,
+      tech,
+      update_user,
+      ...quote
+    } = quoteData;
+
+    await saveQuoteItems(items);
+
     auth
-      .requestv2(`/api/quotes/${quoteData?.id}`, {
+      .requestv2(`/api/quotes/${quote?.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(quoteData),
+        body: JSON.stringify(quote),
       })
       .then(
-        (res) => {
-          let q: QuoteDTO = res;
-
-          setQuoteData(q);
+        (_) => {
           setSaving(false);
+          location.reload();
         },
         (err) => {
           setError("Failed to get data from API!\n" + err);

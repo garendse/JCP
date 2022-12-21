@@ -42,6 +42,7 @@ export interface Cell {
   childVal?: JSX.Element;
   roundFloat?: number;
   validate?: SpreadSheetValidate;
+  width?: number;
   getAutocomplete?: () => AutoComplete[];
 }
 
@@ -215,7 +216,7 @@ export function Spreadsheet(props: SpreadsheetProps) {
           <tr>
             {props.headerRow.map((cell, idx) => (
               <th
-                className="border border-black bg-slate-300 text-sm whitespace-nowrap px-1"
+                className="border border-black bg-slate-300 text-sm whitespace-nowrap px-1 w-fit"
                 key={idx}
               >
                 {cell}

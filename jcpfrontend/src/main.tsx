@@ -17,6 +17,7 @@ import { QuoteProvider } from "./provider/Quote";
 import { Maintain } from "./routes/Maintenance";
 import { AdminTable } from "./components/AdminTable";
 
+import jobcodeparams from "./schemas/jobcodeparams";
 import jobcodes from "./schemas/jobcodes";
 import customer from "./schemas/customer";
 import supplier from "./schemas/supplier";
@@ -25,6 +26,7 @@ import supplier_branches from "./schemas/supplier_branches";
 import userschema from "./schemas/userschema";
 import techs from "./schemas/techs";
 import vehicles from "./schemas/vehicles";
+import { Mailto } from "./routes/Mailto";
 
 const container = document.getElementById("root");
 if (container) {
@@ -55,6 +57,10 @@ if (container) {
                 <Route
                   path="/maintain/job-codes"
                   element={<AdminTable key="jc" {...jobcodes} />}
+                />
+                <Route
+                  path="/maintain/job-code-params"
+                  element={<AdminTable key="jcp" {...jobcodeparams} />}
                 />
                 <Route
                   path="/maintain/customer"
@@ -110,6 +116,10 @@ if (container) {
                 }
               >
                 <Route path="/quote/:quoteId/" element={<QuoteEditLine />} />
+                <Route
+                  path="/quote/:quoteId/mailto/:supplier"
+                  element={<Mailto />}
+                />
               </Route>
             </Route>
             <Route path="/login" element={<Login />} />

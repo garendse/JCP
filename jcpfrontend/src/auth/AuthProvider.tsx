@@ -4,6 +4,8 @@ import * as jose from "jose";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import config from "../config";
 import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
+import { JCPError } from "../Utils";
 
 interface AuthContextType {
   user: any;
@@ -11,7 +13,11 @@ interface AuthContextType {
   init: boolean;
   saveToken: (token: string, callback: () => void) => void;
   signOut: (callback: () => void) => void;
-  requestv2: (url: string, req: RequestInit) => Promise<any>;
+  requestv2: (
+    url: string,
+    req: RequestInit,
+    swal_err?: boolean
+  ) => Promise<any>;
 }
 
 const AuthContext = createContext<AuthContextType>(null!);
@@ -72,8 +78,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     callback();
   };
 
-  let requestv2 = async (url: string, req: RequestInit) => {
-    const clean = (config.api_url + url).replace(/([^:]\/)\/+/g, "$1");
+  let requestv2 = async (
+    url: string,
+    req: RequestInit,
+    swal_err: boolean = true
+  ) => {
+    const clean = (config.api_url + url)
+      .replace(/([^:]\/)\/+/g, "$1")
+      .replace(/\/+$/, "");
     console.log(clean);
     let res_d;
     try {
@@ -85,52 +97,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }),
       });
       res_d = res;
-
       if (!res.ok)
-        throw (
-          `Response code error ${res.status} ${res.statusText} \n` +
-          JSON.stringify(res)
+        throw new JCPError(
+          `Response code error ${res.status} ${res.statusText}`
         );
+    } catch (error) {
+      // @ts-ignore
+      let msg = error.message;
+      // @ts-ignore
+      let body;
+      try {
+        body = await res_d?.json();
+      } catch (_) {
+        body = msg;
+      }
+      if (swal_err) Swal.fire("Request error!", msg, "error");
+      throw new JCPError(msg, body);
+    }
 
-      let json = await res.json();
+    try {
+      let json;
+      // Check for json response
+      const contentType = res_d.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1)
+        json = (await res_d?.json()) ?? "";
       return json;
     } catch (error) {
-      let error_id = uuidv4();
-
-      let error_data = {
-        error_id: error_id,
-        date: new Date().toISOString(),
-        data: JSON.stringify({ error, userid: user?.id ?? "", res_d }),
-      };
-
-      let handle_error = (error: any) => {
-        let err_backlog = localStorage.getItem("err_backlog");
-        let errs = [];
-        if (!err_backlog) errs = [];
-        else errs = JSON.parse(err_backlog);
-
-        errs = [...errs, error];
-        localStorage.setItem("err_backlog", JSON.stringify(errs));
-      };
-
-      fetch((config.api_url + "/Error").replace(/([^:]\/)\/+/g, "$1"), {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify(error_data),
-      }).then(
-        (res) => {
-          if (!res.ok) {
-            handle_error(error_data);
-          }
-        },
-        () => {
-          handle_error(error_data);
-        }
-      );
-
-      throw JSON.stringify(error) + ` {${error_id}}`;
+      // @ts-ignore
+      let msg = error.message;
+      if (swal_err) Swal.fire("JSON parse error!", msg, "error");
+      throw new JCPError(msg);
     }
   };
 

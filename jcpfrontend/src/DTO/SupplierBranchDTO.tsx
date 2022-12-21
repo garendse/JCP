@@ -8,5 +8,5 @@ export interface SupplierBranchDTO {
   address: string;
   lat: number;
   lng: number;
-  quote_email: string;
+  email: string;
 }
