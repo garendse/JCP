@@ -1,7 +1,7 @@
 cd jcpfrontend
 
 call npm install
-call npm run build
+call npm run build-staging
 
 cd ..
 
@@ -13,6 +13,6 @@ xcopy /E/H jcpfrontend\dist .\JCPBackend\wwwroot
 cd JCPBackend
 
 call dotnet restore
-call dotnet publish -o ../publish/prod /p:Configuration=Release /p:EnvironmentName=Staging
+call dotnet publish -o ../publish/staging /p:Configuration=Release /p:EnvironmentName=Staging
 
-cd .. 
+cd ..
