@@ -29,7 +29,8 @@ namespace JCPBackend.Controllers
             var claims = (User.Identity as ClaimsIdentity).Claims;
             var site = claims.Where(u => u.Type == "site_id").First().Value;
 
-            return await _context.j_quotes.Where(u => u.site_access == site).Include("customer").Include("vehicle").Include("tech").ToListAsync();
+            var data = await _context.j_quotes.Where(u => u.site_access == site).Include("customer").Include("vehicle").Include("tech").ToListAsync();
+            return data;
         }
 
         // GET: api/JQuotes/5

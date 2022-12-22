@@ -13,6 +13,6 @@ xcopy /E/H jcpfrontend\dist .\JCPBackend\wwwroot
 cd JCPBackend
 
 call dotnet restore
-call dotnet publish -o ../publish/staging /p:Configuration=Release /p:EnvironmentName=Staging
+call dotnet publish -o ../publish/staging --runtime linux-arm --sc /p:Configuration=Release /p:EnvironmentName=Staging
 
 cd ..

@@ -14,6 +14,6 @@ cp -r jcpfrontend/dist ./JCPBackend/wwwroot
 cd JCPBackend
 
 dotnet restore
-dotnet publish -o ../publish/prod /p:Configuration=Release /p:EnvironmentName=Development
+dotnet publish -o ../publish/prod /p:Configuration=Release /p:EnvironmentName=Production
 
 cd ..

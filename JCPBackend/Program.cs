@@ -65,7 +65,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
@@ -76,6 +75,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.Use(async (context, next) =>
+{
+    if (!context.Request.Path.Value.Contains("/api/") && !context.Request.Path.Value.Contains("/assets"))
+    {
+        await context.Response.SendFileAsync("./wwwroot/index.html");
+        return;
+    }
+
+    await next(context);
+});
 
 //app.UseHttpsRedirection();
 app.UseDefaultFiles();

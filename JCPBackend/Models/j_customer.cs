@@ -42,5 +42,6 @@ public partial class j_customer
 
     public string? site_access_id { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<j_quote> j_quotes { get; } = new List<j_quote>();
 }
