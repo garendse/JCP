@@ -38,5 +38,9 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.1
       with:
-        path: *.zip
+        path: |
+          dev.zip
+          prod.zip
+          staging.zip
+
     
