@@ -14,6 +14,6 @@ cp -r jcpfrontend/dist ./JCPBackend/wwwroot
 cd JCPBackend
 
 dotnet restore
-dotnet publish -o ../publish/staging --runtime linux-arm --sc /p:Configuration=Release /p:EnvironmentName=Staging
+dotnet publish -o ../publish/staging /p:Configuration=Release /p:EnvironmentName=Staging
 
 cd ..

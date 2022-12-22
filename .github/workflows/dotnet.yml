@@ -29,18 +29,10 @@ jobs:
       run: chmod +x ./prod.sh && chmod +x ./staging.sh && chmod +x ./dev.sh
     - name: Build
       run: ./prod.sh && ./staging.sh && ./dev.sh
-    - name: Zip dev Artifact
-      run: zip -r dev.zip ./publish/dev
-    - name: Zip staging Artifact
-      run: zip -r staging.zip ./publish/staging
-    - name: Zip dev Artifact
-      run: zip -r prod.zip ./publish/prod
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.1
       with:
-        path: |
-          dev.zip
-          prod.zip
-          staging.zip
+        name: publish folder
+        path: publish
 
     
