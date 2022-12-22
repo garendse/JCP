@@ -21,9 +21,6 @@ builder.Services.AddCors(options =>
                       });
 });
 
-
-// Add services to the container.
-
 builder.Services.AddControllers(options => {
     options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
     var policy = new AuthorizationPolicyBuilder()
@@ -35,7 +32,7 @@ builder.Services.AddControllers(options => {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddDbContext<JobCostProTestingContext>(options =>
 {
     if (builder.Configuration["JCP_DBMS"] == "sqlserver")
@@ -43,9 +40,6 @@ builder.Services.AddDbContext<JobCostProTestingContext>(options =>
     else
         options.UseNpgsql(builder.Configuration["JCP_POSTGRES_CONNECTION_STRING"]);
 });
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -68,14 +62,6 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 
 app.Use(async (context, next) =>
 {

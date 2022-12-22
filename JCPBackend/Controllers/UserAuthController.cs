@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,13 +12,8 @@ namespace JCPBackend.Controllers
 {
     public class UserLogin
     {
-        [Required]
         public string username { get; set; } = null!;
-        
-        [Required]
         public string password { get; set; } = null!;
-
-        [Required] 
         public string site_id { get; set; } = null!;
     }
 
