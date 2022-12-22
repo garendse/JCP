@@ -25,6 +25,8 @@ jobs:
         node-version: 16
         cache: 'npm'
         cache-dependency-path: jcpfrontend/package-lock.json
+    - name: Setup perms
+      run: chmod +x ./prod.sh && chmod +x ./staging.sh && chmod +x ./dev.sh
     - name: Build
       run: ./prod.sh && ./staging.sh && ./dev.sh
     - name: Zip Artifact
