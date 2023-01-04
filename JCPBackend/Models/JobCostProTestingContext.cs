@@ -26,6 +26,8 @@ public partial class JobCostProTestingContext : DbContext
 
     public virtual DbSet<j_quote_status> j_quote_statuses { get; set; }
 
+    public virtual DbSet<j_part_order> j_sent_emails { get; set; }
+
     public virtual DbSet<j_site> j_sites { get; set; }
 
     public virtual DbSet<j_supplier> j_suppliers { get; set; }

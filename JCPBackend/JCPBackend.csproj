@@ -26,6 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Migrations\SQLServer\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
