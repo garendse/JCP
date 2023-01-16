@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 using System.Security.Claims;
 
+// Used to list the users & add new users
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]
@@ -78,8 +79,6 @@ namespace JCPBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<j_user>> Postj_user(j_user j_user)
         {
-
-
             // Get the user site
             var claims = (User.Identity as ClaimsIdentity).Claims;
             var site = claims.Where(u => u.Type == "site_id").First().Value;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 
+// Used for suppliers
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 using System.Security.Claims;
 
+// This controller is used for the main quote screen and the detailed quote screen and saving the main quote screen info
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]
@@ -29,7 +30,12 @@ namespace JCPBackend.Controllers
             var claims = (User.Identity as ClaimsIdentity).Claims;
             var site = claims.Where(u => u.Type == "site_id").First().Value;
 
-            var data = await _context.j_quotes.Where(u => u.site_access == site).Include("customer").Include("vehicle").Include("tech").ToListAsync();
+            var data = await _context.j_quotes
+                .Where(u => u.site_access == site)
+                .Include("customer")
+                .Include("vehicle")
+                .Include("tech")
+                .ToListAsync();
             return data;
         }
 
@@ -47,7 +53,8 @@ namespace JCPBackend.Controllers
                 .Include("update_user")
                 .Include("items.subquotes.user")
                 .Include("items.subquotes.supplier")
-                .Include("items.subquotes.supplier.supplier").FirstOrDefaultAsync();
+                .Include("items.subquotes.supplier.supplier")
+                .FirstOrDefaultAsync();
 
             if (jQuote == null)
             {
@@ -95,13 +102,15 @@ namespace JCPBackend.Controllers
         {
             var rnd = new Random(DateTime.Now.Millisecond);
 
-            if (quote.ro_number == "" || _context.j_quotes.Where(u => u.ro_number == quote.ro_number).Count() > 0)
+            if (
+                quote.ro_number == ""
+                || _context.j_quotes.Where(u => u.ro_number == quote.ro_number).Count() > 0
+            )
             {
                 do
                 {
                     quote.ro_number = rnd.Next(10000, 100_000).ToString();
-                }
-                while (_context.j_quotes.Where(u => u.ro_number == quote.ro_number).Count() > 0);
+                } while (_context.j_quotes.Where(u => u.ro_number == quote.ro_number).Count() > 0);
             }
 
             quote.id = Guid.NewGuid().ToString();

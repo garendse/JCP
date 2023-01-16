@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 using Microsoft.AspNetCore.Authorization;
 
+// This controller is used to fetch the sites you can sign into
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]

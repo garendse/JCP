@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 using System.Security.Claims;
 
+// Used for technicians
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]

@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+// Used for authentication
 namespace JCPBackend.Controllers
 {
     public class UserLogin
@@ -53,9 +54,17 @@ namespace JCPBackend.Controllers
 
             try
             {
-                var db_user = _context.j_users.Where(u => u.username.ToLower() == user_login.username.ToLower() && u.password == user_login.password).FirstOrDefault();
+                // Find the user -> here you will do password hasing in a proper app
+                var db_user = _context.j_users
+                    .Where(
+                        u =>
+                            u.username.ToLower() == user_login.username.ToLower()
+                            && u.password == user_login.password
+                    )
+                    .FirstOrDefault();
 
-                if(db_user != null) { 
+                if (db_user != null)
+                {
                     user = db_user;
                 }
                 else
@@ -63,9 +72,13 @@ namespace JCPBackend.Controllers
                     throw new Exception("Incorrect login details!");
                 }
 
+                // Non support should not have access to all sites
                 if (user.role != "SUPPORT")
                 {
-                    var db_site = user.sites.Where(u => u.id == user_login.site_id).FirstOrDefault();
+                    // Check access to site
+                    var db_site = user.sites
+                        .Where(u => u.id == user_login.site_id)
+                        .FirstOrDefault();
                     if (db_site == null)
                     {
                         throw new Exception("User does not have access to site!");
@@ -75,45 +88,57 @@ namespace JCPBackend.Controllers
                 }
                 else
                 {
+                    // Support users
                     site_id = user_login.site_id;
-                    site_name = _context.j_sites.Where(u => u.id == site_id).FirstOrDefault()?.description ?? "";
+                    site_name =
+                        _context.j_sites.Where(u => u.id == site_id).FirstOrDefault()?.description
+                        ?? "";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new { token = "", message = ex.Message};
+                return new { token = "", message = ex.Message };
             }
 
-            var key = Encoding.ASCII.GetBytes
-                (_config["JCP_JWT_SECRET"] ?? "BACKUP");
+            var key = Encoding.ASCII.GetBytes(_config["JCP_JWT_SECRET"] ?? "BACKUP");
+            // Setup the data accessable through the JWT
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Jti,
-                    Guid.NewGuid().ToString()),
-                    new Claim("active", user.active.ToString(), ClaimValueTypes.Boolean),
-                    new Claim("end_date", ConvertDate(user.end_date), ClaimValueTypes.Date),
-                    new Claim("username", user.username),
-                    new Claim("id", user.id),
-                    new Claim("name", user.name),
-                    new Claim("password_date", ConvertDate(user.password_date), ClaimValueTypes.Date),
-                    new Claim("role", user.role),
-                    new Claim("surname", user.surname),
-                    new Claim("tel_no", user.tel_no ?? ""),
-                    new Claim("site_id", site_id),
-                    new Claim("site_name", site_name)
-                }),
+                Subject = new ClaimsIdentity(
+                    new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim("active", user.active.ToString(), ClaimValueTypes.Boolean),
+                        new Claim("end_date", ConvertDate(user.end_date), ClaimValueTypes.Date),
+                        new Claim("username", user.username),
+                        new Claim("id", user.id),
+                        new Claim("name", user.name),
+                        new Claim(
+                            "password_date",
+                            ConvertDate(user.password_date),
+                            ClaimValueTypes.Date
+                        ),
+                        new Claim("role", user.role),
+                        new Claim("surname", user.surname),
+                        new Claim("tel_no", user.tel_no ?? ""),
+                        new Claim("site_id", site_id),
+                        new Claim("site_name", site_name)
+                    }
+                ),
                 Expires = DateTime.UtcNow.AddDays(7),
                 Issuer = "",
                 Audience = "",
-                SigningCredentials = new SigningCredentials
-                (new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha512Signature)
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha512Signature
+                )
             };
+
+            // Create the JWT
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var stringToken = tokenHandler.WriteToken(token);
+
             return new { token = stringToken };
 
             //return Results.Unauthorized

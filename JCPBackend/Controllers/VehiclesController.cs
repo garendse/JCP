@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 using System.Security.Claims;
 
+// Used to index vehicles
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]
@@ -23,17 +24,22 @@ namespace JCPBackend.Controllers
 
         // GET: api/j_vehicles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<j_vehicle>>> Getj_vehicles(string customer_id = "", string reg = "")
+        public async Task<ActionResult<IEnumerable<j_vehicle>>> Getj_vehicles(
+            string customer_id = "",
+            string reg = ""
+        )
         {
             // Get the user site
             var claims = (User.Identity as ClaimsIdentity).Claims;
             var site = claims.Where(u => u.Type == "site_id").First().Value;
 
-            return await _context
-                .j_vehicles
-                .Where(u =>
-                u.site_access_id == site &&
-                (u.customer_id.Contains(customer_id) && u.registration.Contains(reg))).ToListAsync();
+            return await _context.j_vehicles
+                .Where(
+                    u =>
+                        u.site_access_id == site
+                        && (u.customer_id.Contains(customer_id) && u.registration.Contains(reg))
+                )
+                .ToListAsync();
         }
 
         // GET: api/j_vehicles/5

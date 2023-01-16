@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 using System.Net;
 
+// This controller stores the different statuses of the quotes
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 using System.Security.Claims;
 
+// This controller is used for the job codes and the parameters.
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]

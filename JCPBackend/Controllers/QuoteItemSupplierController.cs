@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 
+// This controller is used for saving the supplier quotes per line
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]
@@ -23,7 +24,10 @@ namespace JCPBackend.Controllers
         // PUT: api/QuoteItemSupplier/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> Putj_quote_item_supplier(string id, j_quote_item_supplier j_quote_item_supplier)
+        public async Task<IActionResult> Putj_quote_item_supplier(
+            string id,
+            j_quote_item_supplier j_quote_item_supplier
+        )
         {
             if (id != j_quote_item_supplier.id)
             {
@@ -54,7 +58,9 @@ namespace JCPBackend.Controllers
         // POST: api/QuoteItemSupplier
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<IActionResult> Postj_quote_item_supplier(j_quote_item_supplier j_quote_item_supplier)
+        public async Task<IActionResult> Postj_quote_item_supplier(
+            j_quote_item_supplier j_quote_item_supplier
+        )
         {
             j_quote_item_supplier.id = Guid.NewGuid().ToString();
 

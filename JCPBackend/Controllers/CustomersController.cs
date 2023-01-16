@@ -9,6 +9,7 @@ using JCPBackend.Models;
 using System.Security.Policy;
 using System.Security.Claims;
 
+// This controller is used to get the customers for both chekin and admin
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]
@@ -24,12 +25,29 @@ namespace JCPBackend.Controllers
 
         // GET: api/Customers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<j_customer>>> Getj_customers(string mobile_no = "", int limit = 10)
+        public async Task<ActionResult<IEnumerable<j_customer>>> Getj_customers(
+            string mobile_no = "",
+            int limit = 10
+        )
         {
             var claims = (User.Identity as ClaimsIdentity).Claims;
             var site = claims.Where(u => u.Type == "site_id").First().Value;
 
-            return await _context.j_customers.Where(u => u.site_access_id == site && (u.mobile_no.Contains(mobile_no) || u.alt_no.Contains(mobile_no) || u.home_no.Contains(mobile_no) || u.company_name.Contains(mobile_no) || u.work_no.Contains(mobile_no))).OrderBy(c => c.name).Take(limit).ToListAsync();
+            return await _context.j_customers
+                .Where(
+                    u =>
+                        u.site_access_id == site
+                        && (
+                            u.mobile_no.Contains(mobile_no)
+                            || u.alt_no.Contains(mobile_no)
+                            || u.home_no.Contains(mobile_no)
+                            || u.company_name.Contains(mobile_no)
+                            || u.work_no.Contains(mobile_no)
+                        )
+                )
+                .OrderBy(c => c.name)
+                .Take(limit)
+                .ToListAsync();
         }
 
         // GET: api/Customers/5

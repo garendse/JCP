@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JCPBackend.Models;
 
+// This controller is used for the supplier brances
 namespace JCPBackend.Controllers
 {
     [Route("api/[controller]")]
@@ -44,7 +45,10 @@ namespace JCPBackend.Controllers
         // PUT: api/SupplierBranches/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutJSupplierBranch(string id, j_supplier_branch jSupplierBranch)
+        public async Task<IActionResult> PutJSupplierBranch(
+            string id,
+            j_supplier_branch jSupplierBranch
+        )
         {
             if (id != jSupplierBranch.id)
             {
@@ -75,7 +79,9 @@ namespace JCPBackend.Controllers
         // POST: api/SupplierBranches
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<j_supplier_branch>> PostJSupplierBranch(j_supplier_branch jSupplierBranch)
+        public async Task<ActionResult<j_supplier_branch>> PostJSupplierBranch(
+            j_supplier_branch jSupplierBranch
+        )
         {
             jSupplierBranch.id = Guid.NewGuid().ToString();
             _context.j_supplier_branches.Add(jSupplierBranch);
@@ -95,7 +101,11 @@ namespace JCPBackend.Controllers
                 }
             }
 
-            return CreatedAtAction("GetJSupplierBranch", new { id = jSupplierBranch.id }, jSupplierBranch);
+            return CreatedAtAction(
+                "GetJSupplierBranch",
+                new { id = jSupplierBranch.id },
+                jSupplierBranch
+            );
         }
 
         // DELETE: api/SupplierBranches/5
